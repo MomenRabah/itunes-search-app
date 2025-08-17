@@ -1,0 +1,23 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Search {
+  id    Int @id @default(autoincrement())
+  kind  String
+  artistName String
+  releaseDate String
+  trackId String
+  trackName String
+  trackTimeMillis Int
+  artworkUrl100 String
+  previewUrl String
+}
+  

@@ -51,9 +51,6 @@ export function PodcastCard({ podcast, onSave, isSaved = false }: PodcastCardPro
             {formatReleaseDate(podcast.releaseDate)}
           </div>
           
-          <div className="bg-gray-100 px-2 py-1 rounded text-xs text-gray-600 font-medium">
-            {formatTrackTime(podcast.trackTimeMillis)}
-          </div>
         </div>
         {onSave && (
           <button

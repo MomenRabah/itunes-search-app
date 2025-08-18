@@ -2,7 +2,9 @@ import Fastify from 'fastify';
 import searchRoutes from './modules/search/search.route.js';
 import cors from '@fastify/cors';
 
-const app = Fastify();
+const app = Fastify({
+  logger: true,
+});
 
 app.register(cors, {
   origin: "*",
@@ -11,13 +13,21 @@ app.register(cors, {
   allowedHeaders: ['Content-Type', 'Authorization']
 });
 
-
 app.get("/healthcheck", async () => {
     return { status: "ok" };
 });
 
+// Register search routes with /api prefix
+app.register(searchRoutes, { prefix: "/api" });
+
+// For Vercel deployment
+export default async function handler(req: any, res: any) {
+  await app.ready();
+  app.server.emit('request', req, res);
+}
+
+// For local development
 async function main() {
-    app.register(searchRoutes, { prefix: "/api" });
     try {
         app.listen({ port: 3000 }).then(() => {
             console.log("Server running on port 3000");
@@ -26,5 +36,3 @@ async function main() {
         console.error(error);
     }
 }
-
-main();

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Input, Button } from "@heroui/react";
+import Image from "next/image";
 
 interface SearchBarProps {
   onSearch: (query: string) => void;
@@ -21,7 +21,7 @@ export function SearchBar({ onSearch, placeholder = "Search iTunes...", isLoadin
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
-      handleSubmit(e as any);
+      handleSubmit(e as React.FormEvent);
     }
   };
 
@@ -48,9 +48,11 @@ export function SearchBar({ onSearch, placeholder = "Search iTunes...", isLoadin
           className="px-6 py-2 bg-black text-white rounded-lg"
         >
           {isLoading ? (
-            <img 
+            <Image 
               src="/gifs/dots-loading.gif" 
               alt="Loading..." 
+              width={20}
+              height={20}
               className="w-5 h-5 invert"
             />
           ) : (

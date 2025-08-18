@@ -1,9 +1,10 @@
 import Fastify from 'fastify';
 import searchRoutes from './modules/search/search.route.js';
+import cors from '@fastify/cors';
 
 const app = Fastify();
 
-app.register(import('@fastify/cors'), {
+app.register(cors, {
   origin: "*",
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],

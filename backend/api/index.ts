@@ -2,33 +2,39 @@ import Fastify from 'fastify';
 import searchRoutes from '../src/modules/search/search.route.js';
 import cors from '@fastify/cors';
 
-let app: any = null;
+const app = Fastify({
+  logger: true,
+});
 
-async function createApp() {
-  if (app) return app;
-  
-  app = Fastify({
-    logger: true,
-  });
+app.register(cors, {
+  origin: "*",
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+});
 
-  await app.register(cors, {
-    origin: "*",
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-  });
-
-  app.get("/healthcheck", async () => {
+app.get("/healthcheck", async () => {
     return { status: "ok" };
-  });
+});
 
-  await app.register(searchRoutes, { prefix: "/api" });
-  
-  return app;
-}
+app.register(searchRoutes, { prefix: "/api" });
 
 export default async function handler(req: any, res: any) {
-  const fastify = await createApp();
-  await fastify.ready();
-  fastify.server.emit('request', req, res);
+  await app.ready();
+  
+  const response = await app.inject({
+    method: req.method,
+    url: req.url,
+    headers: req.headers,
+    payload: req.body,
+    query: req.query
+  });
+
+  res.status(response.statusCode);
+  
+  for (const [key, value] of Object.entries(response.headers)) {
+    res.setHeader(key, value);
+  }
+  
+  return res.send(response.payload);
 }

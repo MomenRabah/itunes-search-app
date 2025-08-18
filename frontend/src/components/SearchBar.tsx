@@ -35,7 +35,7 @@ export function SearchBar({ onSearch, placeholder = "Search iTunes...", isLoadin
           onKeyPress={handleKeyPress}
           placeholder={placeholder}
           disabled={isLoading}
-          className="flex-1 px-4 py-2 rounded-lg border"
+          className="flex w-full px-4 py-2 rounded-lg border"
         />
         <button
           type="button"

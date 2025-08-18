@@ -94,7 +94,17 @@ export default function Favorites() {
                 onClick={handleClearAll}
                 className="px-4 py-1 text-sm text-red-600 hover:text-red-700 border border-red-200 hover:bg-red-50 rounded-lg transition-colors"
               >
-                Clear All
+                {isLoading ? (
+                  <img 
+                    src="/gifs/dots-loading.gif" 
+                    alt="Loading..." 
+                    width={20}
+                    height={20}
+                    className="w-5 h-5"
+                  />
+                ) : (
+                  "Clear All"
+                )}
               </button>
             )}
           </div>

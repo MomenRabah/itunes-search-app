@@ -97,7 +97,7 @@ export default function Favorites() {
               <button
                 onClick={handleClearAll}
                 disabled={isClearing}
-                className="px-4 py-1 text-sm text-red-600 hover:text-red-700 border border-red-200 hover:bg-red-50 rounded-lg transition-colors disabled:hover:bg-transparent disabled:cursor-not-allowed"
+                className="px-4 py-1 text-sm text-red-600 hover:text-red-700 border border-red-200 rounded-lg transition-colors disabled:cursor-not-allowed"
               >
                 {isClearing ? (
                   <img 

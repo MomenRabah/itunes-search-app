@@ -8,6 +8,7 @@ import { API_ENDPOINTS } from "@src/utils/api";
 export default function Favorites() {
   const [favorites, setFavorites] = useState<Podcast[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isClearing, setIsClearing] = useState(false);
 
   const fetchFavorites = async () => {
     try {
@@ -51,6 +52,7 @@ export default function Favorites() {
 
   const handleClearAll = async () => {
     try {
+      setIsClearing(true);
       const response = await fetch(API_ENDPOINTS.clearFavorites, {
         method: 'DELETE',
       });
@@ -62,6 +64,8 @@ export default function Favorites() {
       setFavorites([]);
     } catch (error) {
       console.error("Clear favorites error:", error);
+    } finally {
+      setIsClearing(false);
     }
   };
 
@@ -92,9 +96,10 @@ export default function Favorites() {
             {favorites.length > 0 && (
               <button
                 onClick={handleClearAll}
-                className="px-4 py-1 text-sm text-red-600 hover:text-red-700 border border-red-200 hover:bg-red-50 rounded-lg transition-colors"
+                disabled={isClearing}
+                className="px-4 py-1 text-sm text-red-600 hover:text-red-700 border border-red-200 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isLoading ? (
+                {isClearing ? (
                   <img 
                     src="/gifs/dots-loading.gif" 
                     alt="Loading..." 

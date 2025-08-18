@@ -5,8 +5,11 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --loader ts-node/esm src/app.ts",
-    "dev": "node --loader ts-node/esm src/app.ts"
+    "start": "node --loader ts-node/esm api/index.ts",
+    "dev": "node --loader ts-node/esm api/index.ts"
+  },
+  "engines": {
+    "node": "18.x"
   },
   "keywords": [],
   "author": "",

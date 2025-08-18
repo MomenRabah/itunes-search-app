@@ -1,22 +1,15 @@
 import Fastify, { type FastifyInstance } from "fastify";
 import cors from "@fastify/cors";
-import searchRoutes from "../src/modules/search/search.route.js";
+import searchRoutes from "./modules/search/search.route.js";
 
-let app: FastifyInstance;
+let app: FastifyInstance | null = null;
 
 async function buildApp(): Promise<FastifyInstance> {
   const fastify = Fastify({ logger: false });
 
-  await fastify.register(cors, {
-    origin: "*",
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  });
+  await fastify.register(cors, { origin: "*" });
 
-  fastify.get("/healthcheck", async () => {
-    return { status: "ok" };
-  });
+  fastify.get("/healthcheck", async () => ({ status: "ok" }));
 
   await fastify.register(searchRoutes, { prefix: "/api" });
 

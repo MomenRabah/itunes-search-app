@@ -32,13 +32,12 @@ export async function searchItunes(term: string): Promise<iTunesResult[]> {
 export async function saveItem(item: iTunesResult) {
   const trackId = item.trackId?.toString() || "";
   
-  // Check if item already exists
   const existingItem = await prisma.search.findFirst({
     where: { trackId }
   });
   
   if (existingItem) {
-    return existingItem; // Return existing item instead of creating duplicate
+    return existingItem;
   }
   
   return await prisma.search.create({

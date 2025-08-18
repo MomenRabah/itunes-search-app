@@ -7,7 +7,12 @@ let app: FastifyInstance | null = null;
 async function buildApp(): Promise<FastifyInstance> {
   const fastify = Fastify({ logger: false });
 
-  await fastify.register(cors, { origin: "*" });
+  await fastify.register(cors, { 
+    origin: "*",
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin']
+  });
 
   fastify.get("/healthcheck", async () => ({ status: "ok" }));
 

@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { PodcastCard } from "@components/PodcastCard";
 import { Podcast } from "@src/types/podcast";
 import { API_ENDPOINTS } from "@src/utils/api";
+import Link from "next/link";
+import { SearchIcon } from "@heroui/shared-icons";
 
 export default function Favorites() {
   const [favorites, setFavorites] = useState<Podcast[]>([]);
@@ -76,7 +78,7 @@ export default function Favorites() {
           <h1 className="text-4xl font-bold text-foreground">
             Your Favorite Podcasts
           </h1>
-          <p className="text-lg text-foreground-600 max-w-2xl">
+          <p className="text-lg text-foreground max-w-2xl">
             All your saved podcasts in one place. Listen, manage, and discover more.
           </p>
         </div>
@@ -85,7 +87,7 @@ export default function Favorites() {
       {isLoading && (
         <div className="flex flex-row items-center gap-2 text-start py-12">
           <img src="/gifs/geometric-loading.gif" alt="Loading..." className="w-6 h-6 mix-blend-darken" />
-          <p className="text-foreground-500">Loading your favorites...</p>
+          <p className="text-foreground">Loading your favorites...</p>
         </div>
       )}
 
@@ -113,7 +115,7 @@ export default function Favorites() {
               </button>
             )}
           </div>
-          <div className="grid grid-cols-1 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 scroll-smooth">
             {favorites.map((podcast, index) => (
               <PodcastCard
                 key={podcast.trackId || `favorite-${index}`}
@@ -127,13 +129,19 @@ export default function Favorites() {
       )}
 
       {!isLoading && favorites.length === 0 && (
-        <div className="text-start py-12">
-          <p className="text-foreground-500 mb-2">
-            No favorites saved yet
-          </p>
-          <p className="text-sm text-foreground-400">
-            Search for podcasts and save your favorites to see them here.
-          </p>
+        <div className="text-start py-12 gap-8 flex flex-col items-center lg:items-start">
+          <div className="flex flex-col lg:flex-row items-center gap-4">
+          <SearchIcon className="w-8 h-8" />
+            <div className="flex flex-col lg:items-start items-center">
+              <p className="text-foreground font-medium">
+                No favorites saved yet
+              </p>
+              <p className="text-sm text-foreground">
+                save your favorites to see them here.
+              </p>
+            </div>
+          </div>
+          <Link href="/" className="px-4 py-1 border hover:border-2 border-black text-black rounded-lg">New Search</Link>
         </div>
       )}
     </div>

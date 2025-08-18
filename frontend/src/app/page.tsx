@@ -5,6 +5,7 @@ import { SearchBar } from "@components/SearchBar";
 import { PodcastCard } from "@components/PodcastCard";
 import { Podcast } from "@src/types/podcast";
 import { API_ENDPOINTS } from "@src/utils/api";
+import { SearchIcon } from "@heroui/shared-icons";
 
 export default function Home() {
   const [searchResults, setSearchResults] = useState<Podcast[]>([]);
@@ -78,7 +79,7 @@ export default function Home() {
         <h1 className="text-4xl font-bold text-foreground">
           Dive into the world of podcasts
         </h1>
-        <p className="text-lg text-foreground-600 max-w-2xl">
+        <p className="text-lg text-foreground max-w-2xl">
           Search millions of podcasts from iTunes. 
           Find your favorites and save them for later.
         </p>
@@ -95,7 +96,7 @@ export default function Home() {
       {isLoading && (
         <div className="flex flex-row items-center gap-2 text-start py-12">
           <img src="/gifs/geometric-loading.gif" alt="Loading..." className="w-6 h-6 mix-blend-darken" />
-          <p className="text-foreground-500">Searching...</p>
+          <p className="text-foreground">Searching...</p>
         </div>
       )}
 
@@ -104,7 +105,7 @@ export default function Home() {
           <div className="text-sm text-gray-500 mb-4">
             Found {searchResults.length} results
           </div>
-          <div className="grid grid-cols-1 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 scroll-smooth">
             {searchResults.map((podcast, index) => (
               <PodcastCard
                 key={podcast.trackId || `podcast-${index}`}
@@ -118,8 +119,9 @@ export default function Home() {
       )}
 
       {searchResults.length === 0 && !isLoading && (
-        <div className="text-start py-12">
-          <p className="text-foreground-500">
+        <div className="flex flex-col py-12 gap-6 items-center text-foreground lg:flex-row">
+          <SearchIcon className="w-8 h-8" />
+          <p>
             Enter a search term to discover podcasts
           </p>
         </div>

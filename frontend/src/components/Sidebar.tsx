@@ -46,7 +46,7 @@ export function Sidebar() {
         </div>
         <div>
           <h1 className="text-xl font-bold text-foreground">iTunes Search</h1>
-          <p className="text-sm text-foreground-500">Discover & Save Podcasts</p>
+          <p className="text-sm text-foreground">Discover & Save Podcasts</p>
         </div>
       </div>
       
